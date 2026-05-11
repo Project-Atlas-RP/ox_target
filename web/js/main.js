@@ -17,6 +17,7 @@ function scheduleClear() {
 window.addEventListener("message", (event) => {
   switch (event.data.event) {
     case "visible": {
+      optionsWrapper.innerHTML = "";
       body.style.visibility = event.data.state ? "visible" : "hidden";
       eye.classList.remove("eye-hover");
       optionsWrapper.classList.remove("visible");
