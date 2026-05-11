@@ -67,7 +67,7 @@ function utils.getNearbyZones(coords)
             currentZones[n] = zone
         end
 
-        if drawN <= drawZoneSprites and zone.drawSprite ~= false and (contains or (zone.distance or 7) < 7) then
+        if drawN <= drawZoneSprites and zone.drawSprite ~= false and (contains or (zone.distance or 7) <= 7) then
             drawN += 1
             drawZones[drawN] = zone
             zone.colour = contains and hover or nil

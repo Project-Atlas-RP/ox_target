@@ -124,7 +124,7 @@ local function shouldHide(option, distance, endCoords, entityHit, entityType, en
 end
 
 local function startTargeting()
-    if state.isDisabled() or state.isActive() or IsNuiFocused() or IsPauseMenuActive() then return end
+    if state.isDisabled() or state.isActive() or IsNuiFocused() or IsPauseMenuActive() or cache.vehicle then return end
 
     state.setActive(true)
 
