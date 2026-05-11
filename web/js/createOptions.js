@@ -5,6 +5,9 @@ const optionsWrapper = document.getElementById("options-wrapper");
 function onClick() {
   // when nuifocus is disabled after a click, the hover event is never released
   this.style.pointerEvents = "none";
+  // lock the visual selected/hover state so it doesn't flash back to default
+  // before the menu closes
+  this.classList.add("selected");
 
   fetchNui("select", [this.targetType, this.targetId, this.zoneId]);
   // is there a better way to handle this? probably

@@ -4,20 +4,39 @@ const optionsWrapper = document.getElementById("options-wrapper");
 const body = document.body;
 const eye = document.getElementById("eyeSvg");
 
-window.addEventListener("message", (event) => {
-  optionsWrapper.innerHTML = "";
+let clearTimer;
 
+function scheduleClear() {
+  clearTimeout(clearTimer);
+  // match the wrapper fade-out duration in style.css
+  clearTimer = setTimeout(() => {
+    optionsWrapper.innerHTML = "";
+  }, 100);
+}
+
+window.addEventListener("message", (event) => {
   switch (event.data.event) {
     case "visible": {
       body.style.visibility = event.data.state ? "visible" : "hidden";
-      return eye.classList.remove("eye-hover");
+      eye.classList.remove("eye-hover");
+      optionsWrapper.classList.remove("visible");
+      if (!event.data.state) {
+        clearTimeout(clearTimer);
+        optionsWrapper.innerHTML = "";
+      }
+      return;
     }
 
     case "leftTarget": {
-      return eye.classList.remove("eye-hover");
+      eye.classList.remove("eye-hover");
+      optionsWrapper.classList.remove("visible");
+      scheduleClear();
+      return;
     }
 
     case "setTarget": {
+      clearTimeout(clearTimer);
+      optionsWrapper.innerHTML = "";
       eye.classList.add("eye-hover");
 
       if (event.data.options) {
@@ -35,6 +54,11 @@ window.addEventListener("message", (event) => {
           });
         }
       }
+
+      // trigger fade-in on the next frame so the transition runs
+      requestAnimationFrame(() => {
+        optionsWrapper.classList.add("visible");
+      });
     }
   }
 });
